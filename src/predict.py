@@ -12,7 +12,12 @@ def load_model():
         )
     # trusted=True is safe here because YOU generated this file locally.
     # If you were loading a model from the internet, you'd inspect trusted types first.
-    return sio.load(MODEL_PATH, trusted=True)
+    unknown_types = sio.get_untrusted_types(file=MODEL_PATH)
+
+    return sio.load(
+        MODEL_PATH,
+        trusted=unknown_types
+    )
 
 def predict_freshness(model, features):
     """
