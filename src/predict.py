@@ -10,14 +10,14 @@ def load_model():
         raise FileNotFoundError(
             f"Model not found at {MODEL_PATH}. Please run 'python src/train.py' first to generate it."
         )
-    # trusted=True is safe here because YOU generated this file locally.
-    # If you were loading a model from the internet, you'd inspect trusted types first.
-    unknown_types = sio.get_untrusted_types(file=MODEL_PATH)
+    types_to_trust = sio.get_untrusted_types(file=MODEL_PATH)
 
-    return sio.load(
+    model = sio.load(
         MODEL_PATH,
-        trusted=unknown_types
+        trusted=types_to_trust
     )
+
+    return model
 
 def predict_freshness(model, features):
     """
