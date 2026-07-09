@@ -216,3 +216,28 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ============================================
+# Added lines
+# ============================================
+# Machine learning models and artifacts
+
+models/
+*.skops
+*.pkl
+*.joblib
+*.h5
+*.pth
+*.pt
+*.onnx
+
+# Dataset files (if large)
+*.csv
+*.xlsx
+*.parquet
+*.jsonl
+
+# Training checkpoints
+checkpoints/
+*.ckpt
+*.tar
