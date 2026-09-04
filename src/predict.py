@@ -19,7 +19,7 @@ CLASSES = ["FRESH", "ROTTEN"]
 def build_base_model() -> torch.nn.Module:
     """Instantiates a lightweight MobileNetV3-Small architecture for produce classification."""
     model = torchvision.models.mobilenet_v3_small(weights=None)
-    model.classifier[2] = torch.nn.Linear(model.classifier[2].in_features, 2)
+    model.classifier[3] = torch.nn.Linear(model.classifier[3].in_features, 2)
     model.eval()
     return model
 
