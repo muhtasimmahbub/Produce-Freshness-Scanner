@@ -221,8 +221,6 @@ __marimo__/
 # Added lines
 # ============================================
 # Machine learning models and artifacts
-
-models/
 *.skops
 *.pkl
 *.joblib
