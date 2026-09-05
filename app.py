@@ -13,6 +13,7 @@ st.set_page_config(
 )
 
 st.title("🍎 Produce Freshness Scanner")
+st.warning("⚠️ **Experimental Prototype:** This model is for demonstration purposes only. Predictions may contain false positives/negatives and should not be used for commercial quality assurance.")
 st.markdown("Upload an image or take a photo to evaluate produce freshness.")
 
 st.divider()
@@ -21,7 +22,11 @@ source = st.radio("Select Image Source:", ["File Upload", "Camera Capture"], hor
 
 uploaded_file = None
 if source == "File Upload":
-    uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader(
+        "Choose an image...", 
+        type=["jpg", "jpeg", "png"],
+        help="Supported formats: Standard RGB JPEG and PNG. Non-standard formats or heavily compressed images may impact inference accuracy."
+)
 else:
     uploaded_file = st.camera_input("Take a picture")
 
@@ -61,11 +66,14 @@ if uploaded_file is not None:
 
                 st.caption(f"Resolution: {resolution}")
 
+                if confidence < 0.80:
+                    st.info("ℹ️ Low confidence prediction. Verify this result manually.")
+
             else:
                 st.error(f"API Error ({response.status_code}): {response.text}")
 
         except requests.exceptions.Timeout:
-            st.error("⌛ Request timed out. FastAPI took longer than 5 seconds to respond.")
+            st.error("⌛ Request timed out. FastAPI took longer than 10 seconds to respond.")
         except requests.exceptions.ConnectionError:
             st.error("🔴 Could not connect to FastAPI. Ensure `uvicorn src.api:app --reload` is running on port 8000.")
         except requests.exceptions.RequestException as e:
