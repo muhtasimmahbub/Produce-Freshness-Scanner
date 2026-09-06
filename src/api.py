@@ -46,6 +46,10 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+@app.get("/ping")
+async def ping():
+    return {"status": "healthy"}
+
 
 class SingleShotResponse(BaseModel):
     filename: str = Field(..., examples=["apple.jpg"])
